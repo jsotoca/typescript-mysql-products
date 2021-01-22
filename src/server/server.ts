@@ -3,7 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import enviroment from '../configuration/enviroment';
-
+import router from '../routes/router.routes';
 export default class Server {
     
     private app: express.Application;
@@ -15,6 +15,8 @@ export default class Server {
         this.app.use(cors());
         this.app.use(helmet());
         this.app.use(compression());
+
+        this.app.use('/api',router);
 
         this.port = parseInt(enviroment.PORT,10);
     }
