@@ -16,6 +16,24 @@ const getAll = async (req:Request, res:Response)=>{
     }
 }
 
+const get = async (req:Request, res:Response)=>{
+    const { id } = req.params;
+    try {
+        const data = await ProductService.search(id);
+        return res.json({
+            status: res.statusCode,
+            data
+        })
+    } catch (error) {
+        return res.json({
+            status: res.statusCode,
+            error: error
+        })
+    }
+}
+
+
 export = {
-    getAll:getAll
+    getAll,
+    get
 }

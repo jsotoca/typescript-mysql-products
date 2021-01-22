@@ -20,4 +20,12 @@ export default class ProductRepository {
         });
     }
 
+    public static search(id: string){
+        return new Promise((resolve,reject)=>{
+            MySQL.doQuery("SELECT * FROM products where id = ?",[id])
+            .then(result => resolve(result))
+            .catch(err => reject(err));
+        });
+    }
+
 }
