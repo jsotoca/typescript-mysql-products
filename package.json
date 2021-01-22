@@ -1,0 +1,47 @@
+{
+  "name": "typescript-mysql-products",
+  "version": "1.0.0",
+  "description": "proyecto para la gestion de productos utilizando typescript y mysql",
+  "main": "app.js",
+  "scripts": {
+    "tsc": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only app.ts",
+    "start": "tsc && node ./dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsotoca/typescript-mysql-products.git"
+  },
+  "keywords": [
+    "typescripy",
+    "mysql",
+    "query",
+    "node",
+    "nodejs"
+  ],
+  "author": "Juan Antonio Soto Cabrera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsotoca/typescript-mysql-products/issues"
+  },
+  "homepage": "https://github.com/jsotoca/typescript-mysql-products#readme",
+  "devDependencies": {
+    "@types/compression": "^1.7.0",
+    "@types/cors": "^2.8.9",
+    "@types/express": "^4.17.11",
+    "@types/mysql": "^2.15.17",
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "mysql": "^2.18.1",
+    "ts-node-dev": "^1.1.1"
+  }
+}
