@@ -20,7 +20,27 @@ export default class OrderDetail {
         this._updated_at = null;
     }
 
+    public get order_id(){
+        return this._order_id;
+    }
+
+    public get product_id(){
+        return this._product_id;
+    }
+
+    public get quantity(){
+        return this._quantity;
+    }
+
+    public get price(){
+        return this._price;
+    }
+
     public get total(){
         return this._total;
+    }
+
+    public set order_id(id){
+        this._order_id = id;
     }
 }

@@ -2,11 +2,11 @@ import mysql from 'mysql';
 import enviroment from '../configuration/enviroment';
 
 export default class MySQL {
-    private cnn: mysql.Connection;
+    private _cnn: mysql.Connection;
     private static _instance: MySQL;
 
     constructor(){
-        this.cnn = mysql.createConnection({
+        this._cnn = mysql.createConnection({
             host: enviroment.DB_HOST,
             database: enviroment.DB_NAME,
             user: enviroment.DB_USER,
@@ -16,10 +16,9 @@ export default class MySQL {
     }
 
     private connectDB(){
-        this.cnn.connect((err:mysql.MysqlError)=> {
+        this._cnn.connect((err:mysql.MysqlError)=> {
             if(err) throw err;
         });
-        console.log("database running");
     }
 
     public static get instance(){
@@ -28,11 +27,15 @@ export default class MySQL {
 
     public static doQuery(query: string, values?: any[]){
          return new Promise<any[]>((resolve,reject)=>{
-            this.instance.cnn.query(query,values,(err,result)=>{
+            this.instance._cnn.query(query,values,(err,result)=>{
                 if(err) reject(err);
                 resolve(result);
             });
          });   
+    }
+
+    public static get cnn(){
+        return this.instance._cnn;
     }
 
 }
