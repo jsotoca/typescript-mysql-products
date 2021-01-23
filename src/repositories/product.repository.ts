@@ -42,4 +42,30 @@ export default class ProductRepository {
         });
     }
 
+    public static updated(product:Product){
+        const { id, name, price, updated_at} = product;
+        return new Promise<boolean>((resolve,reject)=>{
+            MySQL.doQuery(`
+                UPDATE products set name = ?, price = ?, updated_at = ?
+                WHERE id = ?
+            `,[
+                name, price, updated_at, id
+            ])
+            .then(()=>resolve(true))
+            .catch((err)=>reject(err));
+        });
+    }
+
+    public static delete(id: string){
+        return new Promise<boolean>((resolve,reject)=>{
+            MySQL.doQuery(`
+                DELETE FROM products WHERE id = ?
+            `,[
+                id
+            ])
+            .then(()=>resolve(true))
+            .catch((err)=>reject(err));
+        });
+    }
+
 }

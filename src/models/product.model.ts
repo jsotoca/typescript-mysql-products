@@ -1,12 +1,12 @@
 export default class Product {
     
-    private _id: number;
+    private _id: number | null;
     private _name: string;
     private _price: number;
-    private _created_at: Date;
-    private _updated_at: Date;
+    private _created_at: Date | null;
+    private _updated_at: Date | null;
 
-    constructor(id: number, name: string, price: number, created_at: Date, updated_at: Date){
+    constructor(id: number | null, name: string, price: number, created_at: Date | null, updated_at: Date | null){
         this._id = id;
         this._name = name;
         this._price = price;

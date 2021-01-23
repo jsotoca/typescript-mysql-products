@@ -52,9 +52,49 @@ const create = async (req:Request, res:Response)=>{
     }
 }
 
+const updated = async (req:Request, res:Response)=>{
+    const { id, name, price } = req.body;
+    try {
+        await ProductService.updated(new Product(
+            id , name, price, null, null
+        ));
+        res.status(200);
+        return res.json({
+            message: 'Producto actualizado con exito.'
+        });
+    } catch (error) {
+        res.status(500);
+        return res.json({
+            error
+        });
+    }
+}
+
+const remove = async (req:Request, res:Response)=>{
+    const { id} = req.params;
+    try {
+        await ProductService.delete(id);
+        res.status(200);
+        return res.json({
+            message: 'Producto eliminado con exito.'
+        });
+    } catch (error) {
+        res.status(500);
+        return res.json({
+            error
+        });
+    }
+}
+
+const test = (req:Request, res:Response)=>{
+    console.log(req.body);
+}
 
 export = {
     getAll,
     get,
-    create
+    create,
+    updated,
+    remove,
+    test
 }

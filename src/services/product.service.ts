@@ -14,4 +14,12 @@ export default class ProductService {
     public static async create(product: Product){
         return await ProductRepository.create(product);
     }
+
+    public static async updated(product: Product){
+        return await ProductRepository.updated(product);
+    }
+
+    public static async delete(id: string){
+        return await ProductRepository.delete(id);
+    }
 }
