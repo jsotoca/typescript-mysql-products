@@ -6,7 +6,6 @@ export default class Product {
     private _created_at: Date;
     private _updated_at: Date;
 
-
     constructor(id: number, name: string, price: number, created_at: Date, updated_at: Date){
         this._id = id;
         this._name = name;

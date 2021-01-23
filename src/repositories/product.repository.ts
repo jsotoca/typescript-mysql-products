@@ -28,4 +28,18 @@ export default class ProductRepository {
         });
     }
 
+    public static create(product:Product){
+        const { name, price, created_at, updated_at} = product;
+        return new Promise<boolean>((resolve,reject)=>{
+            MySQL.doQuery(`
+                INSERT INTO products(name, price, created_at, updated_at)
+                VALUES (?, ?, ?, ?)
+            `,[
+                name, price, created_at, updated_at
+            ])
+            .then(()=>resolve(true))
+            .catch((err)=>reject(err));
+        });
+    }
+
 }
