@@ -1,6 +1,7 @@
 import { MysqlError } from 'mysql';
 import MySQL from '../configuration/database';
 import Order from '../models/order.model';
+import OrderDetail from '../models/order_details.model';
 import OrderDetailRepository from './order_detail.repository';
 
 export default class OrderRepository {
@@ -53,6 +54,36 @@ export default class OrderRepository {
                 if(err) reject(err);
                 else resolve(result.insertId);
             });
+        });
+    }
+
+    public static getAll(){
+        return new Promise<Order[]>((resolve,reject) => {
+            MySQL.doQuery(`SELECT * FROM orders ORDER BY id DESC`)
+            .then( async(results) => {
+                let orders = results.map(order => new Order(
+                    order.id,
+                    order.creater_id,
+                    order.user_id,
+                    null,
+                    order.total,
+                    order.created_at,
+                    order.updated_at
+                ));
+                for (const order of orders) {
+                    order.details = await this.getDetails(order.id);
+                }
+                resolve(orders);
+            })
+            .catch(err => reject(err));
+        });
+    }
+
+    private static async getDetails(id: number){
+        return new Promise<OrderDetail[]>((resolve,reject)=> {
+            OrderDetailRepository.getAll(id)
+            .then(details => resolve(details))
+            .catch(err => reject(err));
         });
     }
 }

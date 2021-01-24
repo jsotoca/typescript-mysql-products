@@ -7,4 +7,8 @@ export default class OrderService {
         return await OrderRepository.create(order);
     }
 
+    public static async getAll(){
+        return await OrderRepository.getAll();
+    }
+
 }

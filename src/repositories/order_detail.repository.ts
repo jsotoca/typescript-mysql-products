@@ -23,12 +23,12 @@ export default class OrderDetailRepository {
     public static getAll(id: number | string){
         return new Promise<OrderDetail[]>((resolve,reject)=>{
             MySQL.doQuery(
-                `SELECT * FROM order_detail WHERE id = ?`,
+                `SELECT * FROM order_detail WHERE order_id = ?`,
                 [id]
             )
             .then(result => {
-                let details = result.map(detail => {
-                    return new OrderDetail(
+                let details = result.map(detail => 
+                    new OrderDetail(
                         detail.id,
                         detail.order_id,
                         detail.product_id,
@@ -37,8 +37,8 @@ export default class OrderDetailRepository {
                         detail.total,
                         detail.created_at,
                         detail.updated_at,
-                    );
-                });
+                    )
+                );
                 resolve(details);
             })
             .catch(err => reject(err));

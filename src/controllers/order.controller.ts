@@ -27,10 +27,25 @@ const create = async(req:Request, res:Response)=>{
         res.json({
             error
         });
+    } 
+};
+
+const getAll = async (req:Request, res:Response) => {
+    try {
+        let data = await OrderService.getAll();
+        res.status(200);
+        res.json({
+            data
+        })
+    } catch (error) {
+        res.status(500);
+        res.json({
+            error
+        })
     }
-    
 };
 
 export = {
-    create
+    create,
+    getAll
 }

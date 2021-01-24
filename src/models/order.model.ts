@@ -20,6 +20,10 @@ export default class Order {
         this._details = details;
     }
 
+    public get id() {
+        return this._id;
+    }
+
     public get user_id() {
         return this._user_id;
     }
@@ -34,6 +38,10 @@ export default class Order {
     
     public get total() {
         return this._total;
+    }
+
+    public set details(details) {
+        this._details = details;
     }
 
     public get details() {
