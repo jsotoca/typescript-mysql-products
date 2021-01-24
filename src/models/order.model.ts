@@ -32,6 +32,10 @@ export default class Order {
         this._total = total;
     }
     
+    public get total() {
+        return this._total;
+    }
+
     public get details() {
         return this._details;
     }

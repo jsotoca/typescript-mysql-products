@@ -4,7 +4,7 @@ import Order from '../models/order.model';
 export default class OrderService {
 
     public static async create(order: Order){
-        return await OrderRepository.createOrder(order);
+        return await OrderRepository.create(order);
     }
 
 }

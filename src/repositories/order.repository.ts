@@ -5,48 +5,30 @@ import OrderDetailRepository from './order_detail.repository';
 
 export default class OrderRepository {
     
-    public static createOrder(order: Order){
-        let { user_id, creater_id, total } = order;
-        total = this.generateTotal(order);
+    public static create(order: Order){
+        order.total = this.generateTotal(order);
         return new Promise<boolean>((resolve,reject)=>{
-            MySQL.cnn.beginTransaction((err:MysqlError)=>{
+            MySQL.cnn.beginTransaction(async (err:MysqlError)=>{
                 if(err) {
                     reject(err);
                     return;
                 };
-                MySQL.cnn.query(`
-                    INSERT INTO orders(user_id, creater_id, total)
-                    VALUES (?, ?, ?)
-                `,[
-                    user_id, creater_id, total
-                ],(err,result)=>{
-                    if(err) {
-                        reject(err);
-                        return MySQL.cnn.rollback();
-                    };
-                    let insertId = result.insertId;
+                try {
+                    let insertId = await this.createOrder(order);
                     for (const detail of order.details) {
-                        MySQL.cnn.query(`
-                        INSERT INTO order_detail(order_id,product_id,quantity,price,total)
-                        VALUES (?,?,?,?,?)
-                        `,[
-                            insertId,
-                            detail.product_id,
-                            detail.quantity,
-                            detail.price,
-                            detail.total.toFixed(2)
-                        ],(err,result)=>{
-                            if(err){
-                                reject(err);
-                                return MySQL.cnn.rollback();
-                            }
-                            MySQL.cnn.commit(()=>{
-                                resolve(true);
-                            });
-                        });
+                        detail.order_id = insertId;
+                        try {
+                            await OrderDetailRepository.create(detail);
+                        } catch (err) {
+                            reject(err);
+                            return MySQL.cnn.rollback();
+                        }
                     }
-                });
-                
+                    MySQL.cnn.commit(()=>resolve(true));    
+                } catch (err) {
+                    reject(err);
+                    return MySQL.cnn.rollback();
+                }
             });
         });
     }
@@ -58,5 +40,19 @@ export default class OrderRepository {
             total += detail.total;
         }
         return total;
+    }
+
+    private static createOrder(order: Order){
+        return new Promise<number>((resolve,reject)=>{
+            MySQL.cnn.query(`
+                INSERT INTO orders(user_id, creater_id, total)
+                VALUES (?, ?, ?)
+            `,[
+                order.user_id, order.creater_id, order.total
+            ],(err,result)=>{
+                if(err) reject(err);
+                else resolve(result.insertId);
+            });
+        });
     }
 }

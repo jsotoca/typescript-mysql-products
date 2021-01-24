@@ -7,7 +7,7 @@ export default class OrderDetailRepository {
         return new Promise((resolve,reject)=>{
             MySQL.doQuery(`
                 INSERT INTO order_detail(order_id,product_id,quantity,price,total)
-                VALUES (?,?,?;?;?)
+                VALUES (?,?,?,?,?)
             `,[
                 orderDetail.order_id,
                 orderDetail.product_id,
