@@ -6,14 +6,17 @@ import OrderService from '../services/order.service';
 const create = async(req:Request, res:Response)=>{
     let { user_id, creater_id, details } = req.body;
     details = details.map((detail:any) => {
-        return new OrderDetail(null,null,detail['product_id'],detail['quantity'],detail['price']);
+        return new OrderDetail(null,null,detail['product_id'],detail['quantity'],detail['price'],null,null,null);
     });
     try {
         await OrderService.create(new Order(
             null,
             creater_id,
             user_id,
-            details
+            details,
+            null,
+            null,
+            null
         ));
         res.status(200);
         res.json({

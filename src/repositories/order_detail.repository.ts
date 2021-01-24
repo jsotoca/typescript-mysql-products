@@ -20,4 +20,29 @@ export default class OrderDetailRepository {
         });
     }
 
+    public static getAll(id: number | string){
+        return new Promise<OrderDetail[]>((resolve,reject)=>{
+            MySQL.doQuery(
+                `SELECT * FROM order_detail WHERE id = ?`,
+                [id]
+            )
+            .then(result => {
+                let details = result.map(detail => {
+                    return new OrderDetail(
+                        detail.id,
+                        detail.order_id,
+                        detail.product_id,
+                        detail.order_id,
+                        detail.quantity,
+                        detail.total,
+                        detail.created_at,
+                        detail.updated_at,
+                    );
+                });
+                resolve(details);
+            })
+            .catch(err => reject(err));
+        });
+    }
+
 }

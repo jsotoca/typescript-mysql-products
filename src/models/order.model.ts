@@ -2,21 +2,21 @@ import OrderDetail from './order_details.model';
 
 export default class Order {
     
-    private _id: number | null;
-    private _creater_id: number | null;
-    private _user_id: number | null;
+    private _id: number;
+    private _creater_id: number;
+    private _user_id: number;
     private _total: number;
-    private _created_at: Date | null;
-    private _updated_at: Date | null;
+    private _created_at: Date;
+    private _updated_at: Date;
     private _details: OrderDetail[];
 
-    constructor(id: number | null, creater_id: number | null, user_id: number | null, details: OrderDetail[]){
+    constructor(id: number, creater_id: number, user_id: number, details: OrderDetail[], total: number, created_at: Date, updated_at: Date){
         this._id = id;
         this._creater_id = creater_id;
         this._user_id = user_id;
-        this._total = 0.00;
-        this._created_at = null;
-        this._updated_at = null;
+        this._total =  total || 0.00;
+        this._created_at = created_at;
+        this._updated_at = updated_at;
         this._details = details;
     }
 
